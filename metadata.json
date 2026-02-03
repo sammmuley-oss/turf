@@ -1,0 +1,7 @@
+{
+  "name": "SwiftPlay IoT Vending",
+  "description": "A smart sports equipment rental kiosk interface with real-time tracking, payment handling, and system architecture documentation.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
