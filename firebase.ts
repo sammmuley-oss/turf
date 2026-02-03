@@ -1,8 +1,9 @@
 // Firebase core
 import { initializeApp } from "firebase/app";
 
-// Firestore (DATABASE)
+// Firebase services
 import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -14,8 +15,9 @@ const firebaseConfig = {
   appId: "1:45567777875:web:869ebb412b68fc6f537aa6",
 };
 
-// Initialize Firebase app
+// Initialize Firebase app (ONLY ONCE)
 const app = initializeApp(firebaseConfig);
 
-// ✅ Initialize Firestore and EXPORT it
-export const db = getFirestore(app);
+// ✅ EXPORT SERVICES
+export const db = getFirestore(app);   // Firestore
+export const auth = getAuth(app);      // OTP / Phone Auth

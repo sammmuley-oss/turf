@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import {
   User as UserIcon,
   ChevronLeft,
@@ -30,7 +29,8 @@ import {
   addDoc,
   serverTimestamp,
 } from 'firebase/firestore';
-import { db } from './firebase';
+import { signOut } from 'firebase/auth';
+import { db, auth } from './firebase';
 
 const App: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<AppStep>('HOME');
@@ -39,10 +39,10 @@ const App: React.FC = () => {
   const [activeRental, setActiveRental] = useState<RentalSession | null>(null);
 
   /* =======================
-     LOGIN → FIRESTORE
+     OTP LOGIN → FIRESTORE
      ======================= */
   const handleLogin = async (phone: string) => {
-    const userId = phone;
+    const userId = phone; // phone is unique
     const userRef = doc(db, 'users', userId);
     const snap = await getDoc(userRef);
 
@@ -69,9 +69,10 @@ const App: React.FC = () => {
   };
 
   /* =======================
-     LOGOUT
+     LOGOUT (OTP SAFE)
      ======================= */
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await signOut(auth); // 🔐 important for OTP
     setUser(null);
     setActiveRental(null);
     setSelectedEquip(null);
@@ -92,19 +93,17 @@ const App: React.FC = () => {
   const completeRental = async () => {
     if (!user || !selectedEquip) return;
 
-    // Save rental to Firestore
-    const rentalRef = await addDoc(collection(db, 'rentals'), {
+    const rentalDoc = await addDoc(collection(db, 'rentals'), {
       userId: user.id,
       equipmentId: selectedEquip.id,
       startTime: serverTimestamp(),
-      expectedReturn: Date.now() + 60 * 60 * 1000, // 1 hour
+      expectedReturn: Date.now() + 60 * 60 * 1000,
       paidDeposit: selectedEquip.deposit * 2,
       status: 'ACTIVE',
     });
 
-    // Keep local copy for UI
     const rental: RentalSession = {
-      id: rentalRef.id,
+      id: rentalDoc.id,
       userId: user.id,
       equipmentId: selectedEquip.id,
       startTime: Date.now(),
@@ -128,7 +127,6 @@ const App: React.FC = () => {
 
   return (
     <div className="h-screen w-full flex flex-col bg-[#0a0a0c] text-white overflow-hidden">
-
       {/* HEADER */}
       <header className="h-20 glass flex items-center justify-between px-8 border-b border-white/10">
         <div
@@ -146,7 +144,7 @@ const App: React.FC = () => {
         <div className="flex items-center gap-6">
           <button
             onClick={() => setCurrentStep('DOCS')}
-            className="flex items-center gap-2 text-white/60"
+            className="flex items-center gap-2 text-white/60 hover:text-white"
           >
             <FileText size={20} />
             Docs
@@ -154,7 +152,7 @@ const App: React.FC = () => {
 
           <button
             onClick={() => setCurrentStep('ADMIN')}
-            className="flex items-center gap-2 text-white/60"
+            className="flex items-center gap-2 text-white/60 hover:text-white"
           >
             <BarChart size={20} />
             Admin
@@ -164,7 +162,7 @@ const App: React.FC = () => {
             <div className="flex items-center gap-4 bg-white/5 px-4 py-2 rounded-full">
               <UserIcon size={18} className="text-blue-400" />
               <span className="text-sm">{user.phone}</span>
-              <button onClick={handleLogout}>
+              <button onClick={handleLogout} className="text-white/40 hover:text-red-400">
                 <LogOut size={18} />
               </button>
             </div>
@@ -174,11 +172,10 @@ const App: React.FC = () => {
 
       {/* MAIN */}
       <main className="flex-1 flex items-center justify-center p-8 relative">
-
         {currentStep !== 'HOME' && (
           <button
             onClick={() => setCurrentStep('HOME')}
-            className="absolute top-4 left-8 flex items-center gap-2 text-white/60"
+            className="absolute top-4 left-8 flex items-center gap-2 text-white/60 hover:text-blue-400"
           >
             <ChevronLeft size={24} />
             Go Back
