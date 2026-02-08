@@ -4,11 +4,11 @@ import { Equipment, RentalStatus } from './types';
 export const EQUIPMENT_CATALOG: Equipment[] = [
   {
     id: 'e1',
-    name: 'Wilson NBA Basketball',
-    type: 'Ball',
+    name: 'Cricket Bat',
+    type: 'Bat',
     pricePerHour: 5,
     deposit: 10,
-    image: 'https://picsum.photos/seed/bball/400/300',
+    image: 'https://www.anglarsports.com/wp-content/uploads/2024/03/Anglar-Killer-Edition-Explore.webp',
     status: RentalStatus.AVAILABLE,
     lockerId: 'L-101'
   },
@@ -18,7 +18,7 @@ export const EQUIPMENT_CATALOG: Equipment[] = [
     type: 'Ball',
     pricePerHour: 5,
     deposit: 10,
-    image: 'https://picsum.photos/seed/footy/400/300',
+    image: 'https://brand.assets.adidas.com/image/upload/f_auto,q_auto:best,fl_lossy/glbl_football_FW_25_WC_26_OMB_Launch_Combined_PLP_Banner_Snippet_d_07c3ff87f0.jpg',
     status: RentalStatus.AVAILABLE,
     lockerId: 'L-102'
   },
@@ -28,7 +28,7 @@ export const EQUIPMENT_CATALOG: Equipment[] = [
     type: 'Racket',
     pricePerHour: 8,
     deposit: 16,
-    image: 'https://picsum.photos/seed/badm/400/300',
+    image: 'https://media.istockphoto.com/id/1761333789/photo/badminton-shuttlecocks-and-racket-placed-in-the-corner-of-a-synthetic-field.jpg?s=612x612&w=0&k=20&c=3rr4BZqe1rDWsCe6LF_YPCXZe6Um5jizc6d6n96U1Q4=',
     status: RentalStatus.AVAILABLE,
     lockerId: 'L-103'
   },
@@ -38,17 +38,17 @@ export const EQUIPMENT_CATALOG: Equipment[] = [
     type: 'Bat',
     pricePerHour: 10,
     deposit: 20,
-    image: 'https://picsum.photos/seed/bat/400/300',
+    image: 'https://tiimg.tistatic.com/fp/1/007/806/premium-wood-heavy-duty-high-strength-light-weight-willow-cricket-bat--356.jpg',
     status: RentalStatus.AVAILABLE,
     lockerId: 'L-104'
   },
   {
     id: 'e5',
-    name: 'Tennis Racket Pro',
-    type: 'Racket',
+    name: 'Tennis Ball',
+    type: 'Ball',
     pricePerHour: 12,
     deposit: 24,
-    image: 'https://picsum.photos/seed/tennis/400/300',
+    image: 'https://a.storyblok.com/f/320069/1048x476/4e7215cfb3/difference-between-padel-and-tennis-balls.jpg/m/3840x0/filters:quality(80)',
     status: RentalStatus.RENTED,
     lockerId: 'L-105'
   }

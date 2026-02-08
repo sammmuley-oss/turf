@@ -10,7 +10,8 @@ import {
 } from 'lucide-react';
 import { EQUIPMENT_CATALOG } from '../constants';
 import { RentalStatus } from '../types';
-import { uploadToCloudinary } from '../src/utils/cloudinary';
+import { uploadToCloudinary } from "../utils/cloudinary";
+
 
 export const AdminDashboard: React.FC = () => {
   const [uploadingId, setUploadingId] = useState<string | null>(null);
